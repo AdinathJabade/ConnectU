@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaEnvelope, FaBell, FaUserFriends, FaPlus, FaUserCircle, FaComments, FaQuestionCircle, FaBars, FaTimes } from "react-icons/fa";
+import { FaHome, FaPen, FaComments, FaUsers, FaBell, FaUser, FaBars, FaTimes, FaQuestion } from "react-icons/fa";
 
 const StudentDashboardNavbar = ({ setActiveSection }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -7,6 +7,13 @@ const StudentDashboardNavbar = ({ setActiveSection }) => {
   return (
     <nav className="w-full flex items-center justify-between bg-white shadow-md px-4 sm:px-6 py-3 sticky top-0 z-30 border-b border-indigo-100">
       <div className="flex items-center gap-2">
+        <button
+          className="p-2 rounded-full hover:bg-indigo-50 transition"
+          onClick={() => { window.location.href = "/"; }}
+          title="Home"
+        >
+          <FaHome className="text-2xl text-indigo-700" />
+        </button>
         <button
           className="font-extrabold text-2xl text-indigo-700 tracking-wider select-none focus:outline-none bg-transparent border-none cursor-pointer"
           style={{ background: "none", border: "none", padding: 0 }}
@@ -19,24 +26,25 @@ const StudentDashboardNavbar = ({ setActiveSection }) => {
       {/* Desktop menu */}
       <div className="hidden md:flex items-center gap-4">
         <button
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-700 text-white font-semibold shadow hover:from-blue-600 hover:to-indigo-800 transition"
+          className="p-2 rounded-full hover:bg-indigo-50 transition"
           onClick={() => setActiveSection("post")}
+          title="Post"
         >
-          <FaPlus /> Post
+          <FaPen className="text-xl text-indigo-700" />
         </button>
         <button
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-100 to-blue-200 text-indigo-700 font-semibold shadow hover:from-indigo-200 hover:to-blue-300 transition"
+          className="p-2 rounded-full hover:bg-indigo-50 transition"
           onClick={() => setActiveSection("common_msg")}
           title="Q&A / Group Chat"
         >
-          <FaQuestionCircle className="text-xl" /> Q&A
+          <FaQuestion className="text-xl text-indigo-700" />
         </button>
         <button
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-100 to-blue-200 text-indigo-700 font-semibold shadow hover:from-indigo-200 hover:to-blue-300 transition"
+          className="p-2 rounded-full hover:bg-indigo-50 transition"
           onClick={() => setActiveSection("direct_msg")}
           title="Direct Messaging"
         >
-          <FaComments className="text-xl" /> Direct Message
+          <FaComments className="text-xl text-indigo-700" />
         </button>
         <button
           className="p-2 rounded-full hover:bg-indigo-50 transition"
@@ -50,7 +58,7 @@ const StudentDashboardNavbar = ({ setActiveSection }) => {
           title="Profile"
           onClick={() => setActiveSection("profile")}
         >
-          <FaUserCircle className="text-2xl text-indigo-700" />
+          <FaUser className="text-2xl text-indigo-700" />
         </button>
       </div>
       {/* Mobile hamburger */}
@@ -75,38 +83,46 @@ const StudentDashboardNavbar = ({ setActiveSection }) => {
               <FaTimes className="text-2xl text-indigo-700" />
             </button>
             <button
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-700 text-white font-semibold shadow hover:from-blue-600 hover:to-indigo-800 transition"
+              className="p-2 rounded-full hover:bg-indigo-50 transition"
               onClick={() => { setActiveSection("post"); setMenuOpen(false); }}
+              title="Post"
             >
-              <FaPlus /> Post
+              <FaPen className="text-xl text-indigo-700" />
             </button>
             <button
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-100 to-blue-200 text-indigo-700 font-semibold shadow hover:from-indigo-200 hover:to-blue-300 transition"
+              className="p-2 rounded-full hover:bg-indigo-50 transition"
               onClick={() => { setActiveSection("common_msg"); setMenuOpen(false); }}
               title="Q&A / Group Chat"
             >
-              <FaQuestionCircle className="text-xl" /> Q&A
+              <FaQuestion className="text-xl text-indigo-700" />
             </button>
             <button
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-100 to-blue-200 text-indigo-700 font-semibold shadow hover:from-indigo-200 hover:to-blue-300 transition"
+              className="p-2 rounded-full hover:bg-indigo-50 transition"
               onClick={() => { setActiveSection("direct_msg"); setMenuOpen(false); }}
               title="Direct Messaging"
             >
-              <FaComments className="text-xl" /> Direct Message
+              <FaComments className="text-xl text-indigo-700" />
             </button>
             <button
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-100 to-blue-200 text-indigo-700 font-semibold shadow hover:from-indigo-200 hover:to-blue-300 transition"
+              className="p-2 rounded-full hover:bg-indigo-50 transition"
               onClick={() => { setActiveSection("notification"); setMenuOpen(false); }}
               title="Recent Notices"
             >
-              <FaBell className="text-xl text-indigo-700" /> Notifications
+              <FaBell className="text-xl text-indigo-700" />
             </button>
             <button
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-100 to-blue-200 text-indigo-700 font-semibold shadow hover:from-indigo-200 hover:to-blue-300 transition"
+              className="p-2 rounded-full hover:bg-indigo-50 transition"
               onClick={() => { setActiveSection("profile"); setMenuOpen(false); }}
               title="Profile"
             >
-              <FaUserCircle className="text-2xl text-indigo-700" /> Profile
+              <FaUser className="text-2xl text-indigo-700" />
+            </button>
+            <button
+              className="p-2 rounded-full hover:bg-indigo-50 transition"
+              onClick={() => { window.location.href = "/"; setMenuOpen(false); }}
+              title="Home"
+            >
+              <FaHome className="text-2xl text-indigo-700" />
             </button>
           </div>
         </div>

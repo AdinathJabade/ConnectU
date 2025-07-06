@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaFilter, FaEnvelope, FaUserPlus, FaCheck, FaHourglassHalf } from "react-icons/fa";
+import { FaFilter, FaUserPlus, FaCheck, FaHourglassHalf } from "react-icons/fa";
 
 const alumniList = [
 	{
@@ -50,7 +50,12 @@ const AlumniDirectorySection = ({ isAlumni = false }) => {
 	const [selectedSkills, setSelectedSkills] = useState([]);
 	const [company, setCompany] = useState("");
 	const [year, setYear] = useState("");
-	const [showFilters, setShowFilters] = useState(false);
+	const [showFilters, setShowFilters] = useState(() => {
+		if (typeof window !== 'undefined') {
+			return window.innerWidth < 1024 ? true : false;
+		}
+		return true;
+	});
 	const [connectionStatus, setConnectionStatus] = useState({});
 
 	// Pure JS toggleSkill, no types, no TS logic
@@ -168,7 +173,6 @@ const AlumniDirectorySection = ({ isAlumni = false }) => {
 								</div>
 								<div className="flex flex-col items-end gap-2 min-w-[90px] sm:min-w-[110px] md:min-w-[140px]">
 									<span className="text-xs text-blue-400">Batch {a.year}</span>
-									<a href={`mailto:${a.email}`} className="flex items-center gap-1 text-indigo-600 hover:underline text-xs sm:text-sm font-semibold bg-indigo-50 px-2 sm:px-3 py-1 rounded-full transition hover:bg-indigo-100 active:scale-95 focus:outline-none focus:ring-2 focus:ring-indigo-400" tabIndex={0}><FaEnvelope /> Contact</a>
 									{/* Connection/request buttons */}
 									{!isAlumni && getStatus(idx) === "none" && (
 										<button

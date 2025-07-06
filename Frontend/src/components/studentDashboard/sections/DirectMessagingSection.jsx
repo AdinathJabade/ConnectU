@@ -16,25 +16,37 @@ const connectedAlumni = [
 	},
 ];
 
+const connectedStudents = [
+	{
+		name: "Riya Mehta",
+		avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+		branch: "CSE",
+		email: "riya.mehta@student.com",
+	},
+	{
+		name: "Karan Singh",
+		avatar: "https://randomuser.me/api/portraits/men/45.jpg",
+		branch: "ECE",
+		email: "karan.singh@student.com",
+	},
+];
+
 const DirectMessagingSection = () => {
 	const [activeChat, setActiveChat] = useState(null);
-	const [messages, setMessages] = useState([
-		{
-			from: "You",
-			text: "Hi Priya, I would like to connect and ask a few questions!",
-		},
-		{
-			from: "Priya Sharma (Alumni)",
-			text: "Sure! Feel free to ask anything.",
-		},
-	]);
+	const [messages, setMessages] = useState([]);
 	const [input, setInput] = useState("");
+	const [activeTab, setActiveTab] = useState("students");
 
 	const handleSend = () => {
 		if (input.trim() && activeChat) {
 			setMessages([...messages, { from: "You", text: input }]);
 			setInput("");
 		}
+	};
+
+	const handleSelect = (person) => {
+		setActiveChat(person);
+		setMessages([]);
 	};
 
 	return (
@@ -46,43 +58,70 @@ const DirectMessagingSection = () => {
 				Direct Messaging
 			</h2>
 			<div className="flex flex-col md:flex-row gap-4 md:gap-6">
-				{/* Sidebar: Connected Alumni List */}
+				{/* Sidebar: Tabs and List */}
 				<div className="w-full md:w-1/3 lg:w-1/4 bg-white rounded-2xl shadow-xl p-2 sm:p-4 flex flex-col gap-2 border border-blue-100">
+					<div className="flex gap-2 mb-2">
+						<button
+							className={`flex-1 py-2 rounded-xl font-bold text-sm transition ${
+								activeTab === "students"
+									? "bg-blue-100 text-blue-700"
+									: "bg-white text-blue-500 border border-blue-100"
+							}`}
+							onClick={() => setActiveTab("students")}
+						>
+							Connected Students
+						</button>
+						<button
+							className={`flex-1 py-2 rounded-xl font-bold text-sm transition ${
+								activeTab === "alumni"
+									? "bg-blue-100 text-blue-700"
+									: "bg-white text-blue-500 border border-blue-100"
+							}`}
+							onClick={() => setActiveTab("alumni")}
+						>
+							Connected Alumni
+						</button>
+					</div>
 					<div className="mb-2 text-blue-700 font-bold text-base sm:text-lg flex items-center gap-2">
-						<FaUserFriends className="text-blue-400" /> Connected Alumni
+						<FaUserFriends className="text-blue-400" />{" "}
+						{activeTab === "students"
+							? "Connected Students"
+							: "Connected Alumni"}
 					</div>
 					<div className="flex flex-col gap-2">
-						{connectedAlumni.length === 0 && (
+						{activeTab === "students" && connectedStudents.length === 0 && (
+							<div className="text-blue-400">No connected students yet.</div>
+						)}
+						{activeTab === "alumni" && connectedAlumni.length === 0 && (
 							<div className="text-blue-400">No connected alumni yet.</div>
 						)}
-						{connectedAlumni.map((alumni, idx) => (
-							<button
-								key={idx}
-								onClick={() => {
-									setActiveChat(alumni);
-									setMessages([]);
-								}}
-								className={`flex items-center gap-3 p-2 rounded-xl border transition shadow-sm hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-									activeChat && activeChat.email === alumni.email
-										? "bg-blue-100 border-blue-400"
-										: "bg-white border-blue-100"
-								}`}
-							>
-								<img
-									src={alumni.avatar}
-									alt={alumni.name}
-									className="w-10 h-10 rounded-full border-2 border-blue-200 object-cover shadow"
-								/>
-								<div className="flex flex-col items-start">
-									<span className="font-bold text-blue-800 text-sm sm:text-base">
-										{alumni.name}
-									</span>
-									<span className="text-xs text-blue-500">
-										{alumni.company}
-									</span>
-								</div>
-							</button>
-						))}
+						{(activeTab === "students" ? connectedStudents : connectedAlumni).map(
+							(person, idx) => (
+								<button
+									key={idx}
+									onClick={() => handleSelect(person)}
+									className={`flex items-center gap-3 p-2 rounded-xl border transition shadow-sm hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+										activeChat && activeChat.email === person.email
+											? "bg-blue-100 border-blue-400"
+											: "bg-white border-blue-100"
+									}`}
+								>
+									<img
+										src={person.avatar}
+										alt={person.name}
+										className="w-10 h-10 rounded-full border-2 border-blue-200 object-cover shadow"
+									/>
+									<div className="flex flex-col items-start">
+										<span className="font-bold text-blue-800 text-sm sm:text-base">
+											{person.name}
+										</span>
+										<span className="text-xs text-blue-500">
+											{person.company || person.branch}
+										</span>
+									</div>
+								</button>
+							)
+						)}
 					</div>
 				</div>
 				{/* Main Chat Area */}
@@ -100,7 +139,7 @@ const DirectMessagingSection = () => {
 										{activeChat.name}
 									</div>
 									<div className="text-xs text-blue-500">
-										{activeChat.company}
+										{activeChat.company || activeChat.branch}
 									</div>
 								</div>
 							</div>
@@ -155,7 +194,7 @@ const DirectMessagingSection = () => {
 						<div className="flex flex-col items-center justify-center h-full text-blue-400">
 							<FaComments className="text-5xl mb-2" />
 							<span className="font-semibold">
-								Select an alumni to start chatting
+								Select a student or alumni to start chatting
 							</span>
 						</div>
 					)}
